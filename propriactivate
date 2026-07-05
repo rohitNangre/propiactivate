@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legacy Activation Script Utility</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --code-bg: #0b0f19;
+            --border: #334155;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        button:hover {
+            background-color: var(--accent-hover);
+        }
+
+        button.secondary {
+            background-color: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+        }
+
+        button.secondary:hover {
+            background-color: var(--border);
+        }
+
+        /* Toggle Accordion Style */
+        .toggle-header {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: left;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+
+        .toggle-header:hover {
+            background-color: rgba(255, 255, 255, 0.07);
+        }
+
+        .toggle-icon {
+            font-size: 0.75rem;
+            transition: transform 0.3s ease;
+        }
+
+        /* Collapsible Wrapper */
+        .preview-collapse {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: var(--code-bg);
+            border: 1px solid transparent;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+        }
+
+        /* State management classes handled by JS */
+        .preview-collapse.open {
+            border-color: var(--border);
+            max-height: 500px; /* Adjust maximum height as needed */
+            overflow-y: auto;
+        }
+
+        .toggle-header.open {
+            border-radius: 8px 8px 0 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .toggle-header.open .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        pre {
+            margin: 0;
+            padding: 1rem;
+            font-family: "Fira Code", Consolas, Monaco, monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #34d399; /* Classic terminal green tint */
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #10b981;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Legacy Activation Script Utility</h1>
+        <p>Copy or download the batch (.bat) file setup. You can optionally expand the view panel below to look at the script logic.</p>
+
+        <div class="actions">
+            <button id="btnCopy">
+                Copy Command
+            </button>
+            <button id="btnDownload" class="secondary">
+                Download .bat File
+            </button>
+        </div>
+
+        <!-- Collapsible Container -->
+        <button id="btnToggle" class="toggle-header">
+            <span>Show Script Preview (activate.bat)</span>
+            <span class="toggle-icon">▼</span>
+        </button>
+        
+        <div id="previewCollapse" class="preview-collapse">
+            <pre id="scriptContent">@echo off
+title Legacy Windows KMS Activation
+cls
+echo =====================================
+echo Checking for administrator rights...
+echo =====================================
+net session >nul 2>&1
+if %errorLevel% == 0 (
+    echo Admin rights confirmed.
+) else (
+    echo ERROR: Please run this script as Administrator.
+    pause
+    exit
+)
+
+echo.
+echo =====================================
+echo Applying generic KMS Client Key...
+echo =====================================
+:: Example using Windows 10/11 Pro generic KMS key
+slmgr /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX
+
+echo.
+echo =====================================
+echo Connecting to KMS Server...
+echo =====================================
+:: Setting legacy fallback KMS host
+slmgr /skms kms8.msguides.com
+
+echo.
+echo =====================================
+echo Activating Windows...
+echo =====================================
+slmgr /ato
+
+echo.
+echo Done. Press any key to exit.
+pause > null</pre>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+
+    <script>
+        const scriptText = document.getElementById('scriptContent').innerText;
+        const toast = document.getElementById('toast');
+        const btnToggle = document.getElementById('btnToggle');
+        const previewCollapse = document.getElementById('previewCollapse');
+        const toggleLabel = btnToggle.querySelector('span');
+
+        // Toggle Expand/Collapse Logic
+        btnToggle.addEventListener('click', () => {
+            const isOpen = previewCollapse.classList.toggle('open');
+            btnToggle.classList.toggle('open', isOpen);
+            
+            // Switch text contextually
+            toggleLabel.innerText = isOpen 
+                ? 'Hide Script Preview (activate.bat)' 
+                : 'Show Script Preview (activate.bat)';
+        });
+
+        // Copy functionality (Works even if view is collapsed)
+        document.getElementById('btnCopy').addEventListener('click', () => {
+            navigator.clipboard.writeText(scriptText).then(() => {
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            }).catch(err => {
+                alert('Failed to copy text: ', err);
+            });
+        });
+
+        // Download functionality (Works even if view is collapsed)
+        document.getElementById('btnDownload').addEventListener('click', () => {
+            const blob = new Blob([scriptText], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'activate.bat';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+    </script>
+
+</body>
+</html>
