@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows 11 Download Center</title>
+    <style>
+        :root {
+            --win11-blue: #0078d4;
+            --win11-blue-hover: #006cc1;
+            /* Using translucent background colors for an authentic Windows 11 Acrylic/Mica glass blur effect */
+            --win11-card-bg: rgba(255, 255, 255, 0.75);
+            --win11-text-main: #202020;
+            --win11-text-secondary: #5f5f5f;
+            --win11-border: rgba(229, 229, 229, 0.6);
+            --font-family: 'Segoe UI Variable Display', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+            /* Light mode default wallpaper */
+            --win11-wallpaper: url('https://unsplash.com'); 
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --win11-card-bg: rgba(45, 45, 45, 0.75);
+                --win11-text-main: #ffffff;
+                --win11-text-secondary: #b0b0b0;
+                --win11-border: rgba(63, 63, 63, 0.6);
+                --win11-blue: #60cdff;
+                --win11-blue-hover: #4cc3ff;
+                /* Dark mode matching wallpaper */
+                --win11-wallpaper: url('https://unsplash.com');
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-image: var(--win11-wallpaper);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: var(--win11-text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            transition: background-image 0.3s ease;
+        }
+
+        .container {
+            background: var(--win11-card-bg);
+            border: 1px solid var(--win11-border);
+            border-radius: 12px; /* Increased slightly for fluent window feel */
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 480px;
+            padding: 32px;
+            text-align: center;
+            /* Real glassmorphism to let the bloom wallpaper peek through */
+            backdrop-filter: blur(30px) saturate(125%);
+            -webkit-backdrop-filter: blur(30px) saturate(125%);
+        }
+
+        .icon-container {
+            margin-bottom: 24px;
+        }
+
+        .win11-logo {
+            width: 64px;
+            height: 64px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+
+        p {
+            font-size: 14px;
+            color: var(--win11-text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--win11-blue);
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 32px;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: var(--font-family);
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.15s ease, transform 0.1s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 40px;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .download-btn {
+                color: #ffffff;
+            }
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .download-btn {
+                color: #000000;
+            }
+        }
+
+        .download-btn:hover {
+            background-color: var(--win11-blue-hover);
+        }
+
+        .download-btn:active {
+            transform: scale(0.98);
+        }
+
+        .file-info {
+            margin-top: 24px;
+            font-size: 12px;
+            color: var(--win11-text-secondary);
+            border-top: 1px solid var(--win11-border);
+            padding-top: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="icon-container">
+            <svg class="win11-logo" viewBox="0 0 24 24" fill="currentColor" xmlns="http://w3.org">
+                <path d="M0 0h11.5v11.5H0zM12.5 0H24v11.5H12.5zM0 12.5h11.5V24H0zM12.5 12.5H24V24H12.5z" fill="#0078d4"/>
+            </svg>
+        </div>
+        
+        <h1>Microsoft Activation Scripts</h1>
+        <p>Click the button below to safely download the official MAS All-In-One command script setup file directly to your system.</p>
+        
+        <a href="https://azure.com" class="download-btn">
+            Download MAS_AIO.cmd
+        </a>
+
+        <div class="file-info">
+            Verified Source: Azure DevOps (massgrave)
+        </div>
+    </div>
+
+</body>
+</html>
