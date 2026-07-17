@@ -2,87 +2,217 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="https://img.icons8.com/?size=100&id=M9BRw0RJZXKi&format=png&color=000000">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windows 11 Download Center</title>
+    <title>Google Drive - Dark Card Preview</title>
     <style>
-        :root {
-            --bg-main: #0a0a0a;
-            --card-bg: #141414;
-            --text-main: #ffffff;
-            --text-secondary: #999999;
-            --border-color: #262626;
-            --accent-purple: #8b5cf6;
-            --accent-purple-hover: #a78bfa;
-            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: var(--font-family);
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            background-color: #131314;
+            color: #e3e3e3;
+            padding: 24px;
         }
         .container {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            width: 100%;
-            max-width: 400px;
-            padding: 32px;
-            text-align: left; /* Classy off-center alignment style */
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        .icon-container { margin-bottom: 20px; }
-        .win11-logo { width: 44px; height: 44px; }
-        h1 { font-size: 21px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.2px; }
-        p { font-size: 13.5px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; }
+        .header {
+            padding: 16px 8px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #444746;
+        }
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 400;
+        }
+        .drive-icon {
+            width: 28px;
+            height: 28px;
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        .file-card {
+            background-color: #1e1f20;
+            border: 1px solid #444746;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 180px;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .file-card:hover {
+            background-color: #282a2c;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .file-icon {
+            font-size: 28px;
+            background: #2b2c2e;
+            padding: 8px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .file-info {
+            overflow: hidden;
+            width: 100%;
+        }
+        .file-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #e3e3e3;
+            word-break: break-word;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.4;
+            margin-bottom: 4px;
+        }
+        .file-meta {
+            font-size: 11px;
+            color: #c4c7c5;
+        }
+        .card-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+        }
+        .file-size {
+            font-size: 12px;
+            color: #909090;
+            font-weight: 500;
+        }
         .download-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background-color: var(--accent-purple);
-            color: #ffffff;
-            border: none;
-            border-radius: 6px;
-            padding: 0 20px;
-            font-size: 13.5px;
-            font-weight: 500;
+            width: 36px;
+            height: 36px;
+            color: #a8c7fa;
+            background-color: transparent;
+            border: 1px solid #444746;
+            border-radius: 50%;
             text-decoration: none;
-            cursor: pointer;
-            transition: background-color 0.15s ease;
-            width: 100%;
-            height: 40px;
+            transition: background-color 0.2s, border-color 0.2s;
         }
-        .download-btn:hover { background-color: var(--accent-purple-hover); }
-        .file-info {
-            margin-top: 24px;
-            font-size: 11px;
-            color: var(--text-secondary);
-            border-top: 1px solid var(--border-color);
-            padding-top: 16px;
-            display: flex;
-            justify-content: space-between;
+        .download-btn:hover {
+            background-color: #2d3034;
+            border-color: #a8c7fa;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="icon-container">
-            <svg class="win11-logo" viewBox="0 0 24 24" fill="currentColor" xmlns="http://w3.org">
-                <path d="M0 0h11.5v11.5H0zM12.5 0H24v11.5H12.5zM0 12.5h11.5V24H0zM12.5 12.5H24V24H12.5z" fill="#8b5cf6"/>
-            </svg>
-        </div>
-        <h1>MAS All-In-One Script</h1>
-        <p>Grab the official production command script release file directly hosted from the secure cloud pipeline repository.</p>
-        <a href="https://dev.azure.com/massgrave/Microsoft-Activation-Scripts/_apis/git/repositories/Microsoft-Activation-Scripts/items?path=/MAS/All-In-One-Version-KL/MAS_AIO.cmd&download=true" class="download-btn">Download Package File</a>
-        <a href="https://drive.usercontent.google.com/download?id=1K_a0MitWbQcxOHDszItgz-vQhd-jjubo&export=download&authuser=1&confirm=t&uuid=00a5198b-082a-435a-a419-e0e156581d42&at=ABswASZkbzs8jBzWcmnKBxOECCwR:1783599967739" class="download-btn">Activate</a>
-        <div class="file-info">
-            <span>Verified Server</span>
-            <span>Azure DevOps</span>
+
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <div class="header-title">
+            <svg class="drive-icon" viewBox="0 0 87.3 78" xmlns="http://w3.org"><path d="m6.6 78 15.5-27.7h58.6l-15.5 27.7z" fill="#0066da"/><path d="m0 66.5 15.5-27.7 21.8 39.2-15.5 27.7z" fill="#00aa47"/><path d="m43.7 13.9 21.8 39.2h-43.6z" fill="#ffba00"/></svg>
+            <span>Drive Folder Preview</span>
         </div>
     </div>
+
+    <!-- Cards Grid -->
+    <div class="card-grid">
+        <!-- Card 1 -->
+        <div class="file-card">
+            <div class="card-top">
+                <span class="file-icon">⚙️</span>
+                <div class="file-info">
+                    <div class="file-name" title="Kyocera TWAIN Driver_3.3.0216.exe">Kyocera TWAIN Driver_3.3.0216.exe</div>
+                    <div class="file-meta">Modified 16 Mar</div>
+                </div>
+            </div>
+            <div class="card-bottom">
+                <span class="file-size">120.6 MB</span>
+                <a href="#" class="download-btn" title="Download">📥</a>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="file-card">
+            <div class="card-top">
+                <span class="file-icon">💻</span>
+                <div class="file-info">
+                    <div class="file-name" title="MAS_AIO-CRC32_8B16F764.cmd">MAS_AIO-CRC32_8B16F764.cmd</div>
+                    <div class="file-meta">Modified 9 Jul</div>
+                </div>
+            </div>
+            <div class="card-bottom">
+                <span class="file-size">438 KB</span>
+                <a href="#" class="download-btn" title="Download">📥</a>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="file-card">
+            <div class="card-top">
+                <span class="file-icon">📦</span>
+                <div class="file-info">
+                    <div class="file-name" title="office 2021.rar">office 2021.rar</div>
+                    <div class="file-meta">Modified 9 Oct</div>
+                </div>
+            </div>
+            <div class="card-bottom">
+                <span class="file-size">2.4 MB</span>
+                <a href="#" class="download-btn" title="Download">📥</a>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="file-card">
+            <div class="card-top">
+                <span class="file-icon">⚙️</span>
+                <div class="file-info">
+                    <div class="file-name" title="WiFi-23.20.0-Driver64-Win10-Win11.exe">WiFi-23.20.0-Driver64-Win10-Win11.exe</div>
+                    <div class="file-meta">Modified 23 Feb</div>
+                </div>
+            </div>
+            <div class="card-bottom">
+                <span class="file-size">38.6 MB</span>
+                <a href="#" class="download-btn" title="Download">📥</a>
+            </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="file-card">
+            <div class="card-top">
+                <span class="file-icon">⚙️</span>
+                <div class="file-info">
+                    <div class="file-name" title="Zscaler-windows-4.5.0.366-installer-x64.exe">Zscaler-windows-4.5.0.366-installer-x64.exe</div>
+                    <div class="file-meta">Modified 13 Feb</div>
+                </div>
+            </div>
+            <div class="card-bottom">
+                <span class="file-size">60.5 MB</span>
+                <a href="#" class="download-btn" title="Download">📥</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
